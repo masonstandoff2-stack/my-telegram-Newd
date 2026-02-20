@@ -6,7 +6,7 @@ import threading
 from collections import defaultdict
 
 # токен
-bot = telebot.TeleBot("8428311632:AAHG2voyPDqXoSYTYZykmt1I5ad1n7R7Tss")
+bot = telebot.TeleBot("8062397299:AAG8BeqkWMCHu081iWJ9-F_9Sx4U2GD8dak")
 
 # id основного админа (ты)
 MAIN_ADMIN_ID = 8281448580
@@ -843,3 +843,4 @@ print("📊 Статистика доступна по команде /stats (а
 print("🔔 Уведомления о включении/выключении бота в чате")
 
 bot.infinity_polling()
+
